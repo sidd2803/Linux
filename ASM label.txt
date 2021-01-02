@@ -1,0 +1,32 @@
+ASMLib is recommended:
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=101943326044244&id=394959.1&_afrWindowMode=0&_adf.ctrl-state=15v4eytlu6_4
+
+
+how to identify ASM Disks in linux:
+----------------------------------------------------------
+The od (octal dump) command can be used. E.g. od --read-bytes=128 --format=c displays the 1st 128 bytes of a device in character format.
+
+#od --read-bytes=128 --format=c /dev/sdf1
+
+[root@LUE2SSOADB01 ~]# od --read-bytes=128 --format=c /dev/sdf1
+0000000 001 202 001 002  \0  \0  \0  \0  \0  \0  \0 200   >   V   -   C
+0000020 265   x 026  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000040   O   R   C   L   D   I   S   K   D   A   T   A   1  \0  \0  \0
+0000060  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000100  \0 001      \f  \0  \0 001 003   D   A   T   A   _   0   0   0
+0000120   0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000140  \0  \0  \0  \0  \0  \0  \0  \0   D   A   T   A  \0  \0  \0  \0
+0000160  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000200
+
+here, disk header has the info to display the if the disk is ASM or normal. 
+
+
+
+https://www.thegeekdiary.com/how-to-create-device-alias-for-asm-disks-using-mknod-on-linux-unix/
+
+https://blogs.oracle.com/alejandrovargas/how-to-setup-raw-devices-on-linux-when-devraw-does-not-exist
+
+https://oracle-base.com/articles/linux/udev-scsi-rules-configuration-in-oracle-linux
+
+https://bartsjerps.wordpress.com/2014/07/01/linux-udev-create-asm-disk-volumes/

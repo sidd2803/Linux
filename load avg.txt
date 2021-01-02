@@ -1,0 +1,15 @@
+https://askubuntu.com/questions/1028633/host-name-reverts-to-old-name-after-reboot-in-18-04-lts
+
+https://stackoverflow.com/questions/25833070/how-to-persist-hostname-change-on-azure-ubuntu
+
+
+ostnamectl set-hostname LUE2POELIMG77APP
+
+
+
+sudo sed -i '/preserve_hostname: false/c\preserve_hostname: true' /etc/cloud/cloud.cfg && sudo hostnamectl set-hostname LUE2POELIMG77APP
+
+1.	Edited /var/lib/waagent/ovf-env.xml to correct hostname entry
+2.	Modified /etc/cloud/cloud.cfg and added preserve_hostname parameter 
+3.	Ensured /etc/hostname & /etc/hosts file are having expected entries 
+4.	Verified with hostnamectl o/p 

@@ -1,0 +1,157 @@
+sed -i '/crash/ a \/dev/mapper/rootVG-commvault_lv         /opt/commvault  xfs  defaults  0 0' /etc/fstab
+
+mkdir -p /opt/commvault
+lvcreate -L 20G -n commvault_lv rootVG
+mkfs.xfs /dev/mapper/rootVG-commvault_lv
+mount /opt/commvault
+
+chown root:oinstall /opt/commvault
+df -hTP /opt/commvault 
+
+ls -ld /opt/commvault
+
+
+==================================================================================================================================================
+
+for i in `cat`; do mkdir -p $i; chmod 755 $i ; ls -ld $i; done
+
+
+cat lvlist| awk '{print "lvcreate -i 2" " " "-L" "  "  $3"G" "  "  "-n" "  "$1 "           " "vgapp"}'
+
+cat lvlist| awk '{print "mkfs.xfs"  "   " "/dev/mapper/vgapp-"$1 }'
+cat lvlist| awk '{print "mount"  "   " "/dev/mapper/vgapp-"$1 "  "   $2}'
+
+
+lsscsi| grep -i 5:0:0:[1-6]| awk '{print $7}'
+for i in `lsscsi| grep -i 5:0:0:[1-6]| awk '{print $7}'| awk -F \/ '{print $3}'`; do lsblk | grep -i $i  ; done
+
+
+printf "/dev/mapper/vgapp-sap_lv              /usr/sap          xfs         defaults,nofail      0  0"
+
+
+printf "/dev/mapper/vgapp-sap_lv              /usr/sap          xfs         defaults,nofail      0  0" >> /etc/fstab
+
+
+df -hTP | egrep -i 'vgapp' | awk '{print $1 "              " $7 "          xfs         defaults,nofail      0  0"}' ; vi /etc/fstab
+
+LUE2SSFTPINT01:/interface/d_nbty            /interface/d_nbty       nfs         defaults,nofail      0  0
+LUE2SEBSDBDG:/orastage          /orastage               nfs             defaults,nofail         0 0
+
+=============================================================================================================
+
+cd /home; ls -lrt| grep -v total| awk '{print "chown -R"  "  " $3":"$4"  "    $9}'
+
+
+for i in `cat`; do echo "umask 0002" >> /home/$i/.bash_profile; done
+
+cd /home; ls -lrt| grep -v total| awk '{print "chown -R"  "  " $3":"$4"  "    $9}'
+
+
+for i in `cat`; do echo $i : `su - $i umask` ; done | awk '{print $1 "     " $3}'
+
+
+/orastage		10.40.17.15(rw,sync,no_root_squash)
+/orastage		10.40.17.45(rw,sync,no_root_squash)
+/orastage		10.40.17.48(rw,sync,no_root_squash)
+/orastage		10.40.17.53(rw,sync,no_root_squash)
+
+
+
+
+mkdir -p /interface/j_nbty
+groupadd -g 20001 j_nbty
+useradd -m -d /home/j_nbty -s /bin/bash   -u 54331 -g j_nbty j_nbty
+gpasswd -M j_nbty j_nbty
+
+printf "LUESPSFTPINT01:/interface/j_nbty            /interface/j_nbty       nfs         defaults,nofail      0  0">> /etc/fstab
+
+printf "LUE2PSFTPINT01:/interface/j_nbty            /interface/j_nbty       nfs         defaults,nofail      0  0" >> /etc/fstab
+
+mount /interface/j_nbty
+
+df -hTP /interface/j_nbty
+
+ls -ld /interface/j_nbty
+
+=============================================================================================================
+
+
+pr0d@dm1n
+
+az network nic update --name  LUE2DVCPAP01_ETH0 --resource-group RG-ENTSYSNONPRD-DEV-ORACLE  --accelerated-networking true
+az network nic update --name  LUE2DVCPDB01_ETH0 --resource-group RG-ENTSYSNONPRD-DEV-ORACLE  --accelerated-networking true
+az network nic update --name  LUE2DDEMDB11_ETH0 --resource-group RG-ENTSYSNONPRD-DEV-ORACLE  --accelerated-networking true
+
+az network nic update --name  LUE2DPLMDB01_ETH0 --resource-group RG-ENTSYSNONPRD-DEV-ORACLE  --accelerated-networking true
+az network nic update --name  LUE2DDEMDB01_ETH0 --resource-group RG-ENTSYSNONPRD-DEV-ORACLE  --accelerated-networking true
+az network nic update --name  LUE2DSOADB01_ETH0 --resource-group RG-ENTSYSNONPRD-DEV-ORACLE  --accelerated-networking true
+az network nic update --name  LUE2DSOAAP01_ETH0 --resource-group RG-ENTSYSNONPRD-DEV-ORACLE  --accelerated-networking true
+
+
+LUE2DEBSAP21
+LUE2DEBSDB21
+LUE2DDEMDB11
+
+	
+LUE2PPLMDB02_ASM_DATA_01
+LUE2PPLMDB02_ASM_DATA_02
+LUE2PPLMDB02_ASM_DATA_03
+LUE2PPLMDB02_ASM_DATA_04
+LUE2PPLMDB02_ASM_FRA_01
+LUE2PPLMDB02_ASM_FRA_02
+LUE2PPLMDB02_LVM_ORACLE_01
+LUE2PPLMDB02_LVM_ORACLE_02
+
+
+LUE2DEBSAP21.enterprise.nbty.global
+LUE2DEBSDB21.enterprise.nbty.global
+LUE2DDEMDB11.enterprise.nbty.global
+
+
+
+az network nic update --name  LUE2DAVTXAP11_ETH0 --resource-group rg-entsysnonprd-dev-oracle --accelerated-networking true
+az network nic update --name  LUE2DEBSDB11_ETH0 --resource-group rg-entsysnonprd-dev-oracle --accelerated-networking true
+az network nic update --name  LUE2DEBSAP11_ETH0 --resource-group rg-entsysnonprd-dev-oracle --accelerated-networking true
+az network nic update --name  LUE2DEBSAP12_ETH0 --resource-group rg-entsysnonprd-dev-oracle --accelerated-networking true
+
+##################################################################################################################
+LUE2SEBSAP01
+LUE2SEBSAP01_LVM_ORACLE_01
+LUE2SEBSAP01_LVM_ORACLE_02
+
+##################################################################################################################
+/dev/mapper/vgapp-tnbtdisc_lv              /tnbtyi/discollg          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-emagent_lv              /emagent             xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-tnbtinst_lv              /tntbyi/inst          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-applcsf_lv              /tnbyti/applcsf          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-mtlog_lv              /tnbtyi/mtlog          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-applmgr_lv              /tnbtyi/applmgr          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-prorduct_lv              /tnbtyi/prorduct          xfs         defaults,nofail      0  0
+##################################################################################################################
+
+
+LUE2SEBSDBDG
+
+LUE2SEBSDBDG_ASM_DATA_01
+LUE2SEBSDBDG_ASM_DATA_02
+LUE2SEBSDBDG_ASM_DATA_03
+LUE2SEBSDBDG_ASM_DATA_04
+LUE2SEBSDBDG_ASM_FRA_01
+LUE2SEBSDBDG_ASM_FRA_02
+LUE2SEBSDBDG_ASM_FRA_03
+LUE2SEBSDBDG_ASM_FRA_04
+LUE2SEBSDBDG_ASM_OCR_01
+LUE2SEBSDBDG_LVM_ORACLE_01
+LUE2SEBSDBDG_LVM_ORACLE_02
+
+
+##############################################################################################################
+/dev/mapper/vgapp-u01_lv              /u01          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-emagent_lv              /emagent          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-orahome_lv              /oragrid/orahome          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-grid_base_lv              /oragrid/grid_base          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-oracle_lv              /tnbtyi/oracle          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-log_lv              /tnbtyi/log          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-oratmp_lv              /tnbtyi/oratmp          xfs         defaults,nofail      0  0
+/dev/mapper/vgapp-rman_backup_lv              /tnbtyi/rman_backup          xfs         defaults,nofail      0  0
+##############################################################################################################
